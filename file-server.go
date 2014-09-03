@@ -35,7 +35,7 @@ func NewLoggedRequest(req *http.Request) *LoggedRequest {
 // Log prints the contents of LoggedRequest to the console in a developer friendly
 // format. Implement colors for better readability.
 func (lr *LoggedRequest) Log() {
-	t := "|" + lr.timestamp + "|"
+	t := "|" + color.MagentaString(lr.timestamp) + "|"
 	p := "(" + lr.protocol + ")"
 	fmt.Println(
 		t,
@@ -75,9 +75,9 @@ func main() {
 
 	serverAddress := net.JoinHostPort(*addr, fmt.Sprint(*port))
 
-	fmt.Println("Serving files from:", directory)
-	fmt.Println("=>", serverAddress)
-	fmt.Println("Press ctrl+c to exit.")
+	fmt.Println(color.YellowString("⎘"), "Serving files from:", color.YellowString(directory))
+	fmt.Println(color.GreenString("⤇"), serverAddress)
+	fmt.Println(color.RedString("⨂"), "Press 'ctrl+c' to exit.")
 
 	err = http.ListenAndServe(serverAddress, nil)
 	// TODO: implement os signal capture to determine if ERRADDRINUSE, etc
