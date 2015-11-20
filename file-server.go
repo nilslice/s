@@ -11,7 +11,7 @@ import (
 	"github.com/nilslice/color"
 )
 
-// LoggedRequest is a type that abstracts the file requested and information
+// LoggedRequest is a type that abstracts the request and information
 // about it to be logged to the console.
 type LoggedRequest struct {
 	timestamp string
@@ -73,13 +73,13 @@ func main() {
 		combinedLogAndFileServer(res, req, directory)
 	})
 
-	serverAddress := net.JoinHostPort(*addr, fmt.Sprint(*port))
+	hostport := net.JoinHostPort(*addr, fmt.Sprint(*port))
 
 	fmt.Println(color.YellowString("⎘"), "Serving files from:", color.YellowString(directory))
-	fmt.Println(color.GreenString("⤇"), serverAddress)
+	fmt.Println(color.GreenString("⤇"), hostport)
 	fmt.Println(color.RedString("⨂"), "Press 'ctrl+c' to exit.")
 
-	err = http.ListenAndServe(serverAddress, nil)
+	err = http.ListenAndServe(hostport, nil)
 	// TODO: implement os signal capture to determine if ERRADDRINUSE, etc
 	// EADDRINUSE      = Errno(0x62)
 	// http://golang.org/pkg/os/signal/
